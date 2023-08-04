@@ -1,17 +1,28 @@
+// src/index.js
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducers from './reducers';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+// Create the Redux store using the reducers from './reducers'
+const store = createStore(reducers);
+
+// Render the application to the DOM
+ReactDOM.render(
+  // Wrap the entire app with the Redux Provider, providing access to the store
+  // This allows all components in the app to access the Redux store
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <Provider store={store}>
+      {/* Render the main App component */}
+      <App />
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root') // Mount the app inside the HTML element with ID 'root'
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// Report Web Vitals for performance monitoring (optional)
 reportWebVitals();
